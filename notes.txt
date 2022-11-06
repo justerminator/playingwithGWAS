@@ -1,0 +1,7 @@
+Looking at the duration between bursts at 3 mins (180s).
+Compare each animal to see how many bursts in the session.]
+
+For later: see how many presses in each burst
+
+Python Script
+1. Sort all data points an
