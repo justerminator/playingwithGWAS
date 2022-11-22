@@ -22,7 +22,10 @@ row = 4
 column = 18
 interval = 180
 
+def getTotalBursts(animal) -> int:
+    getBursts()
 
+    return len(dictDur[animal])
 
 def populateAnimals():
     listAnimals = []
@@ -78,6 +81,10 @@ def createNewSheet():
     # create title
     r = 0
     for i in range(len(listAnimals)):
+
+        if dictDur[listAnimals[i]] == []:
+            r -= 1
+            continue
         r += 1
         c1 = sheet.cell(1, r + i + 1)
 
@@ -87,6 +94,10 @@ def createNewSheet():
     rowCoord = 2
     colCoord = 2
     for x in range(len(dictDur)):
+        if dictDur[listAnimals[x]] == []:
+            #rowCoord = 2
+            #colCoord += 2
+            continue
 
         for y in range(len(dictDur[listAnimals[x]])):
 
@@ -98,6 +109,7 @@ def createNewSheet():
 
                 c3 = sheet.cell(rowCoord, colCoord + 1)
                 c3.value = dictDur[listAnimals[x]][y][z][1]
+
 
                 rowCoord += 1
 
@@ -116,6 +128,29 @@ def createNewSheet():
     newSheet.save("newfile.xlsx")
 
 listAnimals = populateAnimals()
+def countRewards(data):
+    listAnimals = populateAnimals()
+    rewardCounter = defaultdict(int)
+    rewards = 0
+    averageRewards = 0
+
+    for animal in listAnimals:
+        listBursts = data[animal]
+        for burst in listBursts:
+            ptr = None
+            for x in range(len(burst)):
+                if x != 0 and burst[x][1] - burst[x - 1][1] > 20:
+                    if ptr == None:
+                        ptr = burst[x][1]
+                    rewards += 1
+            #averageRewards += rewards / len(burst)
+            #rewards = 0
+            #print(averageRewards)
+        averageRewards = 0
+    return rewardCounter
+
+
 getBursts()
 createNewSheet()
+#countRewards(dictDur)
 print(dictDur)

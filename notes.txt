@@ -5,3 +5,7 @@ For later: see how many presses in each burst
 
 Python Script
 1. Sort all data points an
+
+Noticed (12/21)
+- I think Yuni's code doesn't count bursts that end in a timeout.
+Perhaps I should also clear that data and see if I match with the website.
