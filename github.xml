@@ -1,0 +1,7 @@
+<application>
+  <component name="GithubAccounts">
+    <account name="justerminator" id="7d46bbf9-c36c-4f65-ba63-638661849596">
+      <server host="github.com" />
+    </account>
+  </component>
+</application>
