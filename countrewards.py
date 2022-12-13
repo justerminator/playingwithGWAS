@@ -6,7 +6,7 @@ from openpyxl.styles import colors
 from openpyxl.cell import Cell
 
 
-path = "newfile.xlsx"
+path = "120s-BSB273DC10HSOXYLGA12_output (1).xlsx"
 grayfill = PatternFill(start_color='00808080', end_color='00808080', fill_type='solid')
 yellowfill = PatternFill(start_color='FFFF99', end_color='FFFF99', fill_type='solid')
 
@@ -57,7 +57,7 @@ def countRewards():
 
             total = next - prev
             #print(total)
-            if total > 20:
+            if total >= 20:
                 sheet_obj.cell(row, column).fill = yellowfill
                 rewardTracker[listAnimals[i]] += 1
                 prev = next

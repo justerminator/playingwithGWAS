@@ -5,7 +5,7 @@ from openpyxl.styles import colors
 from openpyxl.cell import Cell
 
 
-path = "edited-BSB273CC17HSLGA15_output (1).xlsx"
+path = "BSB273DC10HSOXYLGA12_output (1).xlsx"
 grayfill = PatternFill(start_color='00808080', end_color='00808080', fill_type='solid')
 yellowfill = PatternFill(start_color='FFFF99', end_color='FFFF99', fill_type='solid')
 dictDur = defaultdict(list)
@@ -20,7 +20,8 @@ sheet_obj = wb_obj.active
 # range of animal categories
 row = 4
 column = 18
-interval = 180
+interval = 120
+numAnimals = 16 + 2
 
 def getTotalBursts(animal) -> int:
     getBursts()
@@ -29,7 +30,7 @@ def getTotalBursts(animal) -> int:
 
 def populateAnimals():
     listAnimals = []
-    for i in range(2, 18):
+    for i in range(2, numAnimals):
         listAnimals.append(sheet_obj.cell(row, i).value)
 
     return listAnimals
@@ -38,7 +39,7 @@ def getBursts():
     # sort active range
     xValue = 18
     colStart = 15
-    colEnd = 336
+    colEnd = 4217
 
     x = 15
     anCounter = 0
@@ -46,12 +47,12 @@ def getBursts():
     numBursts = 2
 
     # animal for each column
-    for animal in range(2, xValue):
+    for animal in range(2, numAnimals):
 
         allBursts = []
-        i = 15
+        i = 4017
         while i != colEnd:
-            if sheet_obj.cell(i, animal).value == 0:
+            if sheet_obj.cell(i, animal).value == 0 and sheet_obj.cell(i + 1, animal).value == 0:
                 break
             # initialize start time
             oneBurst = []
@@ -60,7 +61,7 @@ def getBursts():
 
             j = i
             while j != colEnd and sheet_obj.cell(j, animal).value <= limit:
-                if sheet_obj.cell(j, animal).value == 0:
+                if sheet_obj.cell(j, animal).value == 0 and sheet_obj.cell(j + 1, animal).value == 0:
                     break
                 oneBurst.append((sheet_obj.cell(j, 1).value, sheet_obj.cell(j, animal).value))
                 j += 1
@@ -125,7 +126,7 @@ def createNewSheet():
         rowCoord = 2
         colCoord += 2
 
-    newSheet.save("newfile.xlsx")
+    newSheet.save("120s-BSB273DC10HSOXYLGA12_output (1).xlsx")
 
 listAnimals = populateAnimals()
 def countRewards(data):
