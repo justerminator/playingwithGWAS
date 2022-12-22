@@ -5,7 +5,7 @@ from openpyxl.styles import colors
 from openpyxl.cell import Cell
 
 
-path = "Book2.xlsx"
+path = "BSB273DC10HSOXYLGA12_output (1).xlsx"
 grayfill = PatternFill(start_color='00808080', end_color='00808080', fill_type='solid')
 yellowfill = PatternFill(start_color='FFFF99', end_color='FFFF99', fill_type='solid')
 dictDur = defaultdict(list)
@@ -18,9 +18,11 @@ wb_obj = openpyxl.load_workbook(path)
 sheet_obj = wb_obj.active
 
 # range of animal categories
-row = 1
+
+# row is row of animals
+row = 4
 interval = 120
-numAnimals = 46 + 2
+numAnimals = 16 + 2
 
 def getTotalBursts(animal) -> int:
     getBursts()
@@ -36,18 +38,22 @@ def populateAnimals():
 
 def getBursts():
     # sort active range
-    colEnd = 202
+
+    #change
+    colEnd = 4217
 
 
     anCounter = 0
 
+    #change
     numBursts = 2
 
     # animal for each column
     for animal in range(2, numAnimals):
 
         allBursts = []
-        i = 2
+        #change
+        i = 4017
         while i != colEnd:
             if sheet_obj.cell(i, animal).value == 0 and sheet_obj.cell(i + 1, animal).value == 0:
                 break
@@ -58,6 +64,9 @@ def getBursts():
 
             j = i
             while j != colEnd and sheet_obj.cell(j, animal).value <= limit:
+                ptr1 = sheet_obj.cell(j, animal).value
+                limit = ptr1 + interval
+
                 if sheet_obj.cell(j, animal).value == 0 and sheet_obj.cell(j + 1, animal).value == 0:
                     break
                 oneBurst.append((sheet_obj.cell(j, 1).value, sheet_obj.cell(j, animal).value))
