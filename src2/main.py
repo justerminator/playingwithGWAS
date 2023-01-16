@@ -8,8 +8,9 @@ from openpyxl.cell import Cell
 path = "BSB273DC10HSOXYLGA12_output (1).xlsx"
 grayfill = PatternFill(start_color='00808080', end_color='00808080', fill_type='solid')
 yellowfill = PatternFill(start_color='FFFF99', end_color='FFFF99', fill_type='solid')
-dictDur = defaultdict(list)
+redfill = PatternFill(start_color='FFCCCB', end_color='FFCCCB', fill_type='solid')
 
+dictDur = defaultdict(list)
 
 # open workbook
 wb_obj = openpyxl.load_workbook(path)
@@ -54,6 +55,10 @@ def getBursts():
         allBursts = []
         #change
         i = 4017
+
+        vX = 0
+        vY = 1
+
         while i != colEnd:
             if sheet_obj.cell(i, animal).value == 0 and sheet_obj.cell(i + 1, animal).value == 0:
                 break
@@ -69,16 +74,37 @@ def getBursts():
 
                 if sheet_obj.cell(j, animal).value == 0 and sheet_obj.cell(j + 1, animal).value == 0:
                     break
-                oneBurst.append((sheet_obj.cell(j, 1).value, sheet_obj.cell(j, animal).value))
-                j += 1
-            if len(oneBurst) >= numBursts:
-                allBursts.append(oneBurst)
-            i = j
 
+                oneBurst.append((sheet_obj.cell(j, 1).value, sheet_obj.cell(j, animal).value))
+
+                if j + 1 != colEnd and sheet_obj.cell(j + 1, animal).value <= limit:
+                    timeoutI = 4218
+
+                    while sheet_obj.cell(timeoutI, animal).value != None and sheet_obj.cell(timeoutI + 1, animal).value != None:
+                        #print(sheet_obj.cell(timeoutI, 1).value)
+                        #print(sheet_obj.cell(timeoutI, animal).value)
+
+                        if sheet_obj.cell(j, animal).value < int(sheet_obj.cell(timeoutI, animal).value) < sheet_obj.cell(j + 1, animal).value:
+                            oneBurst.append((sheet_obj.cell(timeoutI, 1).value, sheet_obj.cell(timeoutI, animal).value))
+                        timeoutI += 1
+
+
+                j += 1
+
+
+
+
+            if len(oneBurst) >= numBursts:
+
+
+                allBursts.append(oneBurst)
+
+            i = j
 
 
         dictDur[listAnimals[anCounter]] = allBursts.copy()
         anCounter += 1
+
 
 
 
@@ -114,8 +140,15 @@ def createNewSheet():
 
                 c2.value = dictDur[listAnimals[x]][y][z][0]
 
+                if dictDur[listAnimals[x]][y][z][0][0] == "T":
+                    c2.fill = redfill
+
+
                 c3 = sheet.cell(rowCoord, colCoord + 1)
-                c3.value = dictDur[listAnimals[x]][y][z][1]
+                c3.value = int(dictDur[listAnimals[x]][y][z][1])
+
+
+
 
 
                 rowCoord += 1
@@ -160,4 +193,4 @@ def countRewards(data):
 getBursts()
 createNewSheet()
 #countRewards(dictDur)
-print(dictDur)
+#timeoutsWithinBurst()
