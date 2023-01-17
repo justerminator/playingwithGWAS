@@ -53,11 +53,9 @@ def getBursts():
     for animal in range(2, numAnimals):
 
         allBursts = []
+
         #change
         i = 4017
-
-        vX = 0
-        vY = 1
 
         while i != colEnd:
             if sheet_obj.cell(i, animal).value == 0 and sheet_obj.cell(i + 1, animal).value == 0:
@@ -72,17 +70,18 @@ def getBursts():
                 ptr1 = sheet_obj.cell(j, animal).value
                 limit = ptr1 + interval
 
+                # check end of data
                 if sheet_obj.cell(j, animal).value == 0 and sheet_obj.cell(j + 1, animal).value == 0:
                     break
 
                 oneBurst.append((sheet_obj.cell(j, 1).value, sheet_obj.cell(j, animal).value))
 
                 if j + 1 != colEnd and sheet_obj.cell(j + 1, animal).value <= limit:
+
+                    # include timeout presses in burst
                     timeoutI = 4218
 
                     while sheet_obj.cell(timeoutI, animal).value != None and sheet_obj.cell(timeoutI + 1, animal).value != None:
-                        #print(sheet_obj.cell(timeoutI, 1).value)
-                        #print(sheet_obj.cell(timeoutI, animal).value)
 
                         if sheet_obj.cell(j, animal).value < int(sheet_obj.cell(timeoutI, animal).value) < sheet_obj.cell(j + 1, animal).value:
                             oneBurst.append((sheet_obj.cell(timeoutI, 1).value, sheet_obj.cell(timeoutI, animal).value))
@@ -91,11 +90,7 @@ def getBursts():
 
                 j += 1
 
-
-
-
             if len(oneBurst) >= numBursts:
-
 
                 allBursts.append(oneBurst)
 
