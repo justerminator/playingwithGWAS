@@ -1,10 +1,7 @@
 import openpyxl
 import main
 from collections import defaultdict
-from openpyxl.styles import Color, PatternFill, Font, Border
-from openpyxl.styles import colors
-from openpyxl.cell import Cell
-
+from openpyxl.styles import PatternFill
 
 path = "newBook2.xlsx"
 grayfill = PatternFill(start_color='00808080', end_color='00808080', fill_type='solid')
