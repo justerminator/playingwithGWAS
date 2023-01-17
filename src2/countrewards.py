@@ -78,15 +78,22 @@ def generateNewSheet(animalLst, workbook):
 
     row = 1
     col = 2
-    sheet2.cell(row, col).value = 'rewards'
+
+    sheet2.cell(2, 1).value = 'rewards'
+    sheet2.cell(2, 2).value = 'bursts'
+
+    dictDur = main.getTotalBursts()
+
     for animal in animalLst:
         dataPtr = rewardData[animal]
         sheet2.cell(row, col).value = animal
         sheet2.cell(row + 1, col).value = dataPtr
-        sheet2.cell(row + 2, col).value = main.getTotalBursts(animal)
+
+        sheet2.cell(row + 2, col).value = len(dictDur[animal])
         row = 1
         col += 1
     workbook.save(path)
+
 
 
 generateNewSheet(listAnimals, wb_obj)

@@ -25,10 +25,10 @@ row = 4
 interval = 120
 numAnimals = 16 + 2
 
-def getTotalBursts(animal) -> int:
+def getTotalBursts() -> dict:
     getBursts()
 
-    return len(dictDur[animal])
+    return dictDur
 
 def populateAnimals():
     listAnimals = []
