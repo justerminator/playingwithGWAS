@@ -13,13 +13,22 @@ import openpyxl
 data = pd.read_excel("xlFull_burst_all_long.xlsx")
 
 
-data_oxy = data[data["drug_group"] == 'Cocaine']
-iir_data_col = data_oxy[["inter_infusion_interval_LGA03", "rat"]]
+data_oxy = data[data["drug_group"] == 'Oxycodone']
+iir_data_col = data_oxy[["inter_infusion_interval_LGA12", "rat"]]
 iir_data_col = iir_data_col.dropna()
 
 
 set_intervals = [(20, 39), (40, 59), (60, 79), (80, 99), (100, 119), (120, 139)]
-set_intervals2 = [(20, 29), (30, 49), (50, 59), (60, 69), (70, 79), (80, 89), (90, 99), (100, 109), (110, 119), (120, 139)]
+#set_intervals2 = [(20, 29), (40, 59), (60, 79), (80, 99), (100, 119), (120, 139)]
+
+set_intervals2 = []
+curr = 0
+
+while curr + 19 != 719:
+    curr += 20
+    set_intervals2.append((curr, curr + 19))
+    print(curr)
+
 
 wb = openpyxl.Workbook()
 ws = wb.active
@@ -59,7 +68,7 @@ def createCounts(lst, rat):
 
                 map_counts[str(set_intervals2[ind])] += 1
                 mapSum[str(set_intervals2[ind])] += 1
-                print(map_counts)
+                #print(map_counts)
 
 
 
@@ -103,7 +112,7 @@ def createCounts(lst, rat):
 for index, row in iir_data_col.iterrows():
 
     leRat = row["rat"]
-    leLst = row["inter_infusion_interval_LGA03"]
+    leLst = row["inter_infusion_interval_LGA12"]
 
 
     map = createCounts(leLst, leRat)
